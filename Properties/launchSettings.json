@@ -11,7 +11,7 @@
     "myspace": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:7254;http://localhost:5239",
+      "applicationUrl": "http://localhost:35749",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

@@ -13,6 +13,11 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));
+var serverVersion = new MySqlServerVersion(new Version(8, 0, 31));
+builder.Services.AddDbContext<ContactContext>(options =>
+{
+    options.UseMySql(builder.Configuration.GetConnectionString("ContactDBConnection"), serverVersion);
+});
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
