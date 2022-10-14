@@ -1,0 +1,30 @@
+﻿@page "/contacts"
+
+<PageTitle>Contacts</PageTitle>
+
+@using myspace.Data
+@inject ContactContext ctx
+
+<h1>These are all your friends.</h1>
+
+@if (contacts == null)
+    {
+    <p><em>Loading...</em></p>
+    }
+    else
+    {
+    @foreach(var contact in contacts)
+{
+            <p>@contact.FirstName @contact.LastName</p>
+}
+    }
+
+
+@code {
+    private List<Person>? contacts;
+    protected override async Task OnInitializedAsync()
+    {
+        contacts = await ctx.People.ToListAsync();
+    }
+}
+
