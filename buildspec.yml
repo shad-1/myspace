@@ -1,5 +1,9 @@
 version: 0.2
 
+env:
+  variables:
+    SOLUTION: ./myspace.sln
+
 phases:
   install:
     runtime-versions:
@@ -9,17 +13,17 @@ phases:
   pre_build:
     commands:
       - echo Restore started on `date`
-      - dotnet restore myspace/myspace.csproj
+      - dotnet restore myspace.csproj
       
   build:
     commands:
       - echo Build started on `date`
-      - dotnet build myspace/myspace.csproj
+      - dotnet build myspace.csproj
       - echo Test started on `date`
-      - dotnet test myspace/myspace.csproj
+      - dotnet test myspace.csproj
       
   post_build:
     commands:
       - echo Publish started on `date`
       # https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/dotnet-linux-platform-bundle-app.html
-      - dotnet publish -c Release -r linux-x64 -o ./ myspace/myspace.csproj
+      - dotnet publish -c Release -r linux-x64 -o ./ myspace.csproj
