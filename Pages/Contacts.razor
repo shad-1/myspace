@@ -15,7 +15,11 @@
     {
     @foreach(var contact in contacts)
 {
-            <p>@contact.FirstName @contact.LastName</p>
+            <p>@contact.FirstName @contact.LastName @contact.PhoneNumber Met at @contact.ContactEvents?.First().Title</p>
+            @foreach (var tag in contact.Tags)
+                {
+                    <p>@tag.Text</p>
+                }
 }
     }
 
@@ -24,7 +28,10 @@
     private List<Person>? contacts;
     protected override async Task OnInitializedAsync()
     {
-        contacts = await ctx.People.ToListAsync();
+        contacts = await ctx.People
+            .Include("ContactEvents")
+            .Include("Tags")
+            .ToListAsync();
     }
 }
 
