@@ -32,5 +32,9 @@
   <ItemGroup>
     <Folder Include="Enums\" />
     <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\img\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\img\" />
   </ItemGroup>
 </Project>
