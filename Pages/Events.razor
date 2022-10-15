@@ -1,0 +1,41 @@
+﻿@page "/events"
+
+<PageTitle>Events</PageTitle>
+
+@using myspace.Data
+@inject ContactContext ctx
+
+<h1 class="m-3">Events List</h1>
+
+@if (events == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        @foreach (var contactEvent in events)
+        {
+            <div class="card col-12 mb-3">
+                <div class="row">
+                    <h3 class="col-6 p-4">@contactEvent.Title</h3>
+                    <div class="card-body d-flex justify-content-end col-6">
+                        <div class="px-4">
+                            <h5>@contactEvent.DateTimeOccurred.ToString("MMM dd, yyyy")</h5>
+                            <h5>@contactEvent.DateTimeOccurred.ToString("h:mm tt")</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private List<ContactEvent>? events;
+    protected override async Task OnInitializedAsync()
+    {
+        events = await ctx.ContactEvents.ToListAsync();
+    }
+}
+

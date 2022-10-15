@@ -10,17 +10,17 @@ public class ContactContext: DbContext
 	{
 	}
 
-	public DbSet<Person> People { get; set; }
-	public DbSet<ContactEvent> ContactEvents { get; set; }
-	public DbSet<ContactTemplate> ContactTemplates { get; set; }
-	public DbSet<Note> Notes { get; set; }
-	public DbSet<Tag> Tags { get; set; }
+	public DbSet<Person>? People { get; set; }
+	public DbSet<ContactEvent>? ContactEvents { get; set; }
+	public DbSet<ContactTemplate>? ContactTemplates { get; set; }
+	public DbSet<Note>? Notes { get; set; }
+	public DbSet<Tag>? Tags { get; set; }
 
 	protected override void OnModelCreating(ModelBuilder builder)
 	{
 		builder.Entity<Person>().HasData(
-			new Person { PersonId = 1, FirstName = "John", LastName = "Test", PhoneNumber = "8773012998" },
-            new Person { PersonId = 2, FirstName = "Charles", LastName = "Test", PhoneNumber = "8783022999" }
+			new Person { PersonId = 1, FirstName = "John", LastName = "Test", PhoneNumber = 8773012998, ImageFile = "test1.jpeg" },
+            new Person { PersonId = 2, FirstName = "Charles", LastName = "Test", PhoneNumber = 8783022999, ImageFile = "test2.jpeg" }
             );
 		builder.Entity<Tag>().HasData(
 			new Tag { TagId = 1, Text = "School" },

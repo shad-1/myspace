@@ -1,4 +1,4 @@
-﻿@page "/contacts"
+﻿@page "/"
 
 <PageTitle>Contacts</PageTitle>
 
@@ -7,23 +7,41 @@
 
 <h1>These are all your friends.</h1>
 
-@if (contacts == null)
-    {
+@if (contacts == null) {
     <p><em>Loading...</em></p>
-    }
-    else
-    {
-    @foreach(var contact in contacts)
-{
-            <p>@contact.FirstName @contact.LastName</p>
-}
-    }
+} else {
+    <div class="row">
+        @foreach (var contact in contacts) {
+            <div class="col-lg-4 d-flex align-items-stretch">
+                <div class="card m-3 p-4 col-11">
+                    <div class="card-title">
+                        <h3>@contact.FirstName @contact.LastName</h3>
+                        <img class="img-fluid max-width: 150px max-height: 150px rounded d-block mx-auto" src="img/@contact.ImageFile" />
+                    </div>
+                    <div class="card-body d-flex align-items-end">
+                        <div>
+                        <h5 class="mb-3">Contact Info</h5>
+                        @if (contact.PhoneNumber != null)
+                        {
+                            <p class="m-0">Phone Number: @String.Format("{0:(###) ###-####}", contact.PhoneNumber)</p>
+                        }
+
+                        @if (contact.Email != null)
+                        {
+                            <p class="m-0">Email: @contact.Email</p>
+                        }
+                        </div>
+                    </div>
+                </div>
+            </div>
+          }
+    </div>
+ }
 
 
 @code {
     private List<Person>? contacts;
-    protected override async Task OnInitializedAsync()
-    {
+    protected override async Task OnInitializedAsync() {
         contacts = await ctx.People.ToListAsync();
     }
 }
