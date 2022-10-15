@@ -5,9 +5,9 @@
 @using myspace.Data
 @inject ContactContext ctx
 
-<h1>These are all your friends.</h1>
+<h2>Contacts</h2>
 
-@if (contacts == null) {
+@if (contacts is null) {
     <p><em>Loading...</em></p>
 } else {
     <div class="row">
@@ -15,20 +15,28 @@
             <div class="col-lg-4 d-flex align-items-stretch">
                 <div class="card m-3 p-4 col-11">
                     <div class="card-title">
-                        <h3>@contact.FirstName @contact.LastName</h3>
+                        <h4>@contact.FirstName @contact.LastName</h4>
                         <img class="img-fluid max-width: 150px max-height: 150px rounded d-block mx-auto" src="img/@contact.ImageFile" />
                     </div>
                     <div class="card-body d-flex align-items-end">
                         <div>
                         <h5 class="mb-3">Contact Info</h5>
-                        @if (contact.PhoneNumber != null)
+                        @if (contact.PhoneNumber is not null)
                         {
-                            <p class="m-0">Phone Number: @String.Format("{0:(###) ###-####}", contact.PhoneNumber)</p>
+                            <div class="m-0">Phone Number: @String.Format("{0:(###) ###-####}", contact.PhoneNumber)</div>
                         }
 
-                        @if (contact.Email != null)
+                        @if (contact.Email is not null)
                         {
-                            <p class="m-0">Email: @contact.Email</p>
+                            <div class="m-0">Email: @contact.Email</div>
+                        }
+                        @if (contact.Notes is not null)
+                        {
+                            <div class="bold">Notes:</div>
+                            @foreach (var note in contact.Notes)
+                            {
+                                <div>@note.CreatedDate: @note.Text</div>
+                            }
                         }
                         </div>
                     </div>

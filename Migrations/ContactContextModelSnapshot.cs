@@ -83,7 +83,7 @@ namespace myspace.Migrations
                         new
                         {
                             ContactEventId = 1,
-                            DateTimeOccurred = new DateTime(2022, 10, 13, 15, 13, 40, 121, DateTimeKind.Local).AddTicks(2320),
+                            DateTimeOccurred = new DateTime(2022, 10, 14, 9, 47, 17, 897, DateTimeKind.Local).AddTicks(6550),
                             Impression = 0,
                             Medium = 4,
                             NeedsFollowUp = false,
@@ -149,7 +149,7 @@ namespace myspace.Migrations
                         new
                         {
                             NoteId = 1,
-                            CreatedDate = new DateTime(2022, 10, 14, 15, 13, 40, 121, DateTimeKind.Local).AddTicks(2220),
+                            CreatedDate = new DateTime(2022, 10, 15, 9, 47, 17, 897, DateTimeKind.Local).AddTicks(6500),
                             PersonId = 1,
                             Text = "John is awesome!"
                         });
@@ -168,11 +168,14 @@ namespace myspace.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("ImageFile")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("LastName")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("longtext");
+                    b.Property<long?>("PhoneNumber")
+                        .HasColumnType("bigint");
 
                     b.HasKey("PersonId");
 
@@ -183,15 +186,17 @@ namespace myspace.Migrations
                         {
                             PersonId = 1,
                             FirstName = "John",
+                            ImageFile = "test1.jpeg",
                             LastName = "Test",
-                            PhoneNumber = "8773012998"
+                            PhoneNumber = 8773012998L
                         },
                         new
                         {
                             PersonId = 2,
                             FirstName = "Charles",
+                            ImageFile = "test2.jpeg",
                             LastName = "Test",
-                            PhoneNumber = "8783022999"
+                            PhoneNumber = 8783022999L
                         });
                 });
 
