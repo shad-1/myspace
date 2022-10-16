@@ -1,0 +1,45 @@
+﻿@page "/compose-message/{Id:int}"
+@inject ContactContext ctx
+@using myspace.Data
+
+<h3>Compose a new message from template</h3>
+@if (person is null || templates is null)
+    {
+    <p><em>Loading...</em></p>
+    }
+    else
+    {
+    <div class="card p-4">
+        @if (template is not null)
+        {
+            <div>
+                <p>@string.Format(template.Greeting, person.FirstName)</p>
+                <p>@template.BodyText</p>
+                <p>Best,<br />James</p>
+            </div>
+            }
+            <div class="d-flex justify-content-end">
+            <a class="btn btn-primary my-4 me-4" href="mailto:@person.Email">Send</a>
+            <a class="btn btn-secondary my-4" href="/contact-detail/Id">Go Back</a>
+            </div>
+    </div>
+    }
+
+    @code {
+    [Parameter]
+    public int Id { get; set; }
+    public Person person { get; set; }
+    public List<ContactTemplate> templates { get; set; }
+    public ContactTemplate template { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        person = await ctx.People
+            .FirstOrDefaultAsync(p => p.PersonId == Id);
+
+        templates = await ctx.ContactTemplates.ToListAsync();
+
+            template = templates.First();
+    }
+    }
+
