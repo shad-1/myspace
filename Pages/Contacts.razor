@@ -35,14 +35,6 @@
                                         <a href='mailto:@contact.Email'>@contact.Email</a>
                                     </div>
                                 }
-                                @if (contact.Notes is not null)
-                                {
-                                    <div class="bold">Notes:</div>
-                                    @foreach (var note in contact.Notes)
-                                    {
-                                        <div>@note.CreatedDate: @note.Text</div>
-                                    }
-                                }
 
                                 @if (contact.Tags is not null)
                                 {
