@@ -1,9 +1,28 @@
 ﻿@page "/contact-detail/{Id:int}"
+@inject ContactContext ctx
+@using myspace.Data
 
-<h3>Details for user @Id</h3>
+@if (person is null)
+    {
+    <p><em>Loading...</em></p>
+    }
+    else
+    {
+    <h3>@person.FirstName @person.LastName</h3>
 
-@code {
-    [Parameter]
-    public int? Id { get; set; }
-}
+    }
+    @code {
+        [Parameter]
+        public int? Id { get; set; }
+private Person person { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        person = await ctx.People
+            .Include("ContactEvents")
+            .Include("Notes")
+            .Include("Tags")
+            .FirstOrDefaultAsync(p => p.PersonId == Id);
+    }
+    }
 
