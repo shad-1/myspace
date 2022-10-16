@@ -2,27 +2,87 @@
 @inject ContactContext ctx
 @using myspace.Data
 
-@if (person is null)
-    {
+@if (person is null) {
     <p><em>Loading...</em></p>
-    }
-    else
-    {
-    <h3>@person.FirstName @person.LastName</h3>
-    <a class="btn btn-primary" href="compose-message/@Id">Contact using template</a>
-    }
-    @code {
-        [Parameter]
-        public int? Id { get; set; }
-private Person person { get; set; }
+ } else {
+<div class="container shadow rounded p-5 row">
+    <div class="col-8">
+        <h1 class="mb-4">
+            @person.FirstName @person.LastName
+            @if (person.Tags is not null)
+            {
+                <div class="tag-wrapper my-2">
+                    @foreach (var tag in person.Tags)
+                    {
+                        <div class="tag">@tag.Text</div>
+                    }
+                </div>
+            }
+        </h1>
+        @if (person.PhoneNumber is not null)
+        {
+            <div class="my-1">
+                Telephone: <a href='tel:@person.PhoneNumber'>@String.Format("{0:(###) ###-####}", person.PhoneNumber)</a>
+            </div>
+        }
 
-    protected override async Task OnInitializedAsync()
-    {
+        @if (person.Email is not null)
+        {
+            <div class="my-1">
+                Email: <a href='mailto:@person.Email'>@person.Email</a>
+            </div>
+        }
+
+        @if (person.ContactEvents is not null){
+            <div class="row mt-5 mb-3">
+                <h3>Events</h3>
+            </div>
+            @foreach (var networkEvent in person.ContactEvents) {
+                <div class="col-4">
+                    <div class="card p-3">
+                        <h4 class="card-title">@networkEvent.Title</h4>
+                        @if (networkEvent.Tags is not null)
+                        {
+                            <div class="tag-wrapper my-2">
+                                @foreach (var tag in networkEvent.Tags)
+                                {
+                                    <div class="tag">@tag.Text</div>
+                                }
+                            </div>
+                        }
+                        <p class="my-0">@networkEvent.DateTimeOccurred.ToString("MMM dd, yyyy")</p>
+                        <p class="my-0">@networkEvent.DateTimeOccurred.ToString("h:mm tt")</p>
+                        <div class="card-body">
+                            <b>Impression: </b>@networkEvent.Impression
+                            <b>Medium: </b>@networkEvent.Medium
+                        </div>
+                        @if (!networkEvent.NeedsFollowUp)
+                        {
+                            <p class="text-danger">*Follow Up</p>
+                        }
+                    </div>
+                </div>
+             }
+         }
+    </div>
+    <div class="col-4">
+        <img class="img-fluid max-width: 300px max-height: 500px rounded d-block mx-auto" src="img/@person.ImageFile" />
+    </div>
+    
+</div>
+ }
+
+@code {
+    [Parameter]
+    public int? Id { get; set; }
+    private Person person { get; set; }
+
+    protected override async Task OnInitializedAsync() {
         person = await ctx.People
             .Include("ContactEvents")
             .Include("Notes")
             .Include("Tags")
             .FirstOrDefaultAsync(p => p.PersonId == Id);
     }
-    }
+}
 
