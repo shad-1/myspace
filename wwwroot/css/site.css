@@ -4,6 +4,27 @@
     font-weight: bold;
 }
 
+a.nostyle {
+    text-decoration: none;
+    color: unset;
+}
+
+.tag-wrapper {
+    margin: 1.5rem 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.tag {
+    margin-right: 8px;
+    padding: 4px 8px;
+    background: rgba(60, 120, 180, .2);
+    border: 1px solid rgba(60, 120, 180, .8);
+    border-radius: 4px;
+    color: rgba(60, 120, 180, .8);
+    font-size: small;
+}
 
 
 

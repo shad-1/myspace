@@ -14,32 +14,48 @@
         @foreach (var contact in contacts) {
             <div class="col-lg-4 d-flex align-items-stretch">
                 <div class="card m-3 p-4 col-11">
-                    <div class="card-title">
-                        <h4>@contact.FirstName @contact.LastName</h4>
-                        <img class="img-fluid max-width: 150px max-height: 150px rounded d-block mx-auto" src="img/@contact.ImageFile" />
-                    </div>
-                    <div class="card-body d-flex align-items-end">
-                        <div>
-                        <h5 class="mb-3">Contact Info</h5>
-                        @if (contact.PhoneNumber is not null)
-                        {
-                            <div class="m-0">Phone Number: @String.Format("{0:(###) ###-####}", contact.PhoneNumber)</div>
-                        }
-
-                        @if (contact.Email is not null)
-                        {
-                            <div class="m-0">Email: @contact.Email</div>
-                        }
-                        @if (contact.Notes is not null)
-                        {
-                            <div class="bold">Notes:</div>
-                            @foreach (var note in contact.Notes)
-                            {
-                                <div>@note.CreatedDate: @note.Text</div>
-                            }
-                        }
+                    <a href="contact-detail/@contact.PersonId" class="nostyle">
+                        <div class="card-title">
+                            <h4>@contact.FirstName @contact.LastName</h4>
+                            <img class="img-fluid max-width: 150px max-height: 150px rounded d-block mx-auto" src="img/@contact.ImageFile" />
                         </div>
-                    </div>
+                        <div class="card-body d-flex align-items-end">
+                            <div>
+                                <h6 class="mb-3">Contact Info</h6>
+                                @if (contact.PhoneNumber is not null)
+                                {
+                                    <div>
+                                        <a href='tel:@contact.PhoneNumber'>@String.Format("{0:(###) ###-####}", contact.PhoneNumber)</a>
+                                    </div>
+                                }
+
+                                @if (contact.Email is not null)
+                                {
+                                    <div>
+                                        <a href='mailto:@contact.Email'>@contact.Email</a>
+                                    </div>
+                                }
+                                @if (contact.Notes is not null)
+                                {
+                                    <div class="bold">Notes:</div>
+                                    @foreach (var note in contact.Notes)
+                                    {
+                                        <div>@note.CreatedDate: @note.Text</div>
+                                    }
+                                }
+
+                                @if (contact.Tags is not null)
+                                {
+                                    <div class="tag-wrapper">
+                                        @foreach (var tag in contact.Tags)
+                                        {
+                                            <div class="tag">@tag.Text</div>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
           }
