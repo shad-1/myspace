@@ -33,11 +33,13 @@
             </div>
         }
 
-        @if (person.ContactEvents is not null){
+        @if (person.ContactEvents is not null)
+        {
             <div class="row mt-5 mb-3">
                 <h3>Events</h3>
             </div>
-            @foreach (var networkEvent in person.ContactEvents) {
+            @foreach (var networkEvent in person.ContactEvents)
+            {
                 <div class="col-4">
                     <div class="card p-3">
                         <h4 class="card-title">@networkEvent.Title</h4>
@@ -62,13 +64,15 @@
                         }
                     </div>
                 </div>
-             }
-         }
+            }
+        }
     </div>
     <div class="col-4">
-        <img class="img-fluid max-width: 300px max-height: 500px rounded d-block mx-auto" src="img/@person.ImageFile" />
+        <img class="img-fluid max-width: 300px max-height: 500px rounded d-block mx-auto" src="@person.ImageFile" />
     </div>
-    
+    <div class="d-flex justify-content-end mt-4">
+    <a class="btn btn-primary" href="compose-message/@Id">Contact using template</a>
+    </div>
 </div>
  }
 
